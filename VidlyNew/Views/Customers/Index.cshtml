@@ -1,0 +1,46 @@
+﻿@model IEnumerable<VidlyNew.Models.Customer>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Customers</h1>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <h3>Customer List</h3>
+            </th>
+        </tr>
+        </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td>
+                    There are no customers yet.
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var cust in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(
+                           cust.Name, "Details", "Customers",
+                           new
+                           {                                                     // routeValues
+                               Id = cust.Id
+                           },
+                           null
+                         )
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
