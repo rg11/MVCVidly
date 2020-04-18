@@ -1,21 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VidlyNew.Models;
 using VidlyNew.ViewModels;
 
+
 namespace VidlyNew.Controllers
 {
     public class MoviesController: Controller
     {
+
+        ApplicationDbContext _context;
+
+        public MoviesController()
+        {
+            _context = new Models.ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+
         ///Passing Data to the View can be possible three ways:
         ///Directly passing the model to the view 
         ///Using ViewData Dictionary
-        ///Using ViewBag Dynamic type
-
-
+        ///Using ViewBag Dynamic type        
         /// <summary>
         /// Example of Action Results
         /// </summary>
@@ -83,23 +97,14 @@ namespace VidlyNew.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<Movie> movies = GetMovies();
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
 
             return View(movies);
         }
 
-        private static IEnumerable<Movie> GetMovies()
-        {
-            return new List<Models.Movie>
-            {
-                new Movie {Id=1, Name="Shrek" },
-                new Movie {Id=2, Name="Jaws" }
-            };            
-        }
-
         public ActionResult Details(string Id)
         {
-            Movie movie = GetMovies().SingleOrDefault(m => m.Id.ToString() == Id);
+            Movie movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id.ToString() == Id);
             return View(movie);
         }
        

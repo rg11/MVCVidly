@@ -14,19 +14,32 @@
         </tr>
     </thead>
     <tbody>
-      
-        <tr>
-            <td>
-                @if (Model != null)
-                {
+        @if (Model != null)
+        {
+            <tr>
+                <td>
                     <h3>@Model.Name</h3>
-                }
-                else
-                {
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul>
+                        <li>Genre : @Model.Genre.Name</li>
+                        <li>Release Date : @Model.ReleasedDate.ToShortDateString()</li>
+                        <li>Date Added : @Model.DateAdded.ToShortDateString() </li>
+                        <li>Number in stock : @Model.QuantityInStock</li>
+                    </ul>
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>
                     <h3>No matching data available</h3>
-                }
-            </td>
-        </tr>     
 
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

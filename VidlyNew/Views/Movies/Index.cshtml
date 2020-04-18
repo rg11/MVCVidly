@@ -11,23 +11,27 @@
     <thead class="thead-dark">
         <tr>
             <th>
-                <h3>Movie List</h3>
+                <h3>Movie</h3>
+            </th>
+            <th>
+                <h3>Genre</h3>
             </th>
         </tr>
     </thead>
     <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td>
-                    There are no movies available yet.
-                </td>
-            </tr>
-        }
-        else
-        {
-            foreach (var movie in Model)
-            {
+<tbody>
+       @if (!Model.Any())
+       {
+        <tr>
+            <td colspan="2">
+                There are no movies available yet.
+            </td>
+        </tr>
+       }
+       else
+       {
+           foreach (var movie in Model)
+           {
                 <tr>
                     <td>
                         @Html.ActionLink(
@@ -41,8 +45,8 @@
                            null
                        )
                     </td>
-
-                </tr>
+                    <td>@movie.Genre.Name</td>
+</tr>
             }
         }
     </tbody>
