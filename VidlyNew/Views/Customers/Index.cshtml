@@ -6,11 +6,14 @@
 
 <h1>Customers</h1>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
             <th>
-                <h3>Customer List</h3>
+                <h3>Customer</h3>
+            </th>
+            <th>
+                <h3>Discount</h3>
             </th>
         </tr>
         </thead>
@@ -18,7 +21,7 @@
         @if (!Model.Any())
         {
             <tr>
-                <td>
+                <td colspan="2">
                     There are no customers yet.
                 </td>
             </tr>
@@ -39,7 +42,8 @@
                          )
 
                     </td>
-                </tr>
+                    <td>@cust.MembershipType.DiscountRate%</td>
+</tr>
             }
         }
     </tbody>

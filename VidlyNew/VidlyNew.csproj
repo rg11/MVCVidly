@@ -195,6 +195,10 @@
     <Compile Include="Migrations\202004180548099_ApplyAnnotationsToCustomer.Designer.cs">
       <DependentUpon>202004180548099_ApplyAnnotationsToCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004180631567_UpdatedCustomerField.cs" />
+    <Compile Include="Migrations\202004180631567_UpdatedCustomerField.Designer.cs">
+      <DependentUpon>202004180631567_UpdatedCustomerField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004180548099_ApplyAnnotationsToCustomer.resx">
       <DependentUpon>202004180548099_ApplyAnnotationsToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180631567_UpdatedCustomerField.resx">
+      <DependentUpon>202004180631567_UpdatedCustomerField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
