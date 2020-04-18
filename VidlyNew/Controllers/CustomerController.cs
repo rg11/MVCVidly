@@ -33,7 +33,9 @@ namespace VidlyNew.Controllers
 
         public ActionResult Details(string Id)
         {
-            Customer customer = _context.Customers.FirstOrDefault(p => p.Id.ToString() == Id);
+            Customer customer = _context.Customers.Include(
+                c => c.MembershipType).
+                FirstOrDefault(p => p.Id.ToString() == Id);
             return View(customer);
         }
     }

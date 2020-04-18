@@ -13,17 +13,35 @@
         </tr>
     </thead>
     <tbody>
+    @if (Model != null)
+    {
         <tr>
             <td>
-                @if (Model != null)
-                {
-                    <h3>@Model.Name</h3>
-                }
-                else
-                {
-                    <h3>No matching data available</h3>
-                }
+                <h3>@Model.Name</h3>
             </td>
         </tr>
+            <tr>
+                <td>
+                    <ul>
+                        <li>Membership Type : @Model.MembershipType.MembershipName</li>
+                        @if (Model.Birthdate != null)
+                        {
+                            <li>Birthdate : @Model.Birthdate.Value.ToShortDateString()</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                <h3>No matching data available</h3>
+                
+            </td>
+        </tr>
+    }
+
     </tbody>
+
 </table>

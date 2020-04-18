@@ -13,6 +13,9 @@
                 <h3>Customer</h3>
             </th>
             <th>
+                <h3>Membership</h3>
+            </th>
+            <th>
                 <h3>Discount</h3>
             </th>
         </tr>
@@ -21,7 +24,7 @@
         @if (!Model.Any())
         {
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     There are no customers yet.
                 </td>
             </tr>
@@ -42,6 +45,7 @@
                          )
 
                     </td>
+                    <td>@cust.MembershipType.MembershipName</td>
                     <td>@cust.MembershipType.DiscountRate%</td>
 </tr>
             }
