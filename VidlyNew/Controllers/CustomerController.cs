@@ -38,5 +38,16 @@ namespace VidlyNew.Controllers
                 FirstOrDefault(p => p.Id.ToString() == Id);
             return View(customer);
         }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            NewCustomerViewModel newCustomerVM = new ViewModels.NewCustomerViewModel
+            {
+                MembershipTypes  = membershipTypes
+            };
+
+            return View(newCustomerVM);
+        }
     }
 }
