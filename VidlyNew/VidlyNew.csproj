@@ -215,9 +215,30 @@
     <Compile Include="Migrations\202004180729421_ApplyAnnotationToBirthDate.Designer.cs">
       <DependentUpon>202004180729421_ApplyAnnotationToBirthDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004180808510_AddGenre.cs" />
+    <Compile Include="Migrations\202004180808510_AddGenre.Designer.cs">
+      <DependentUpon>202004180808510_AddGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180830085_UpdateGenreAndMovieFields.cs" />
+    <Compile Include="Migrations\202004180830085_UpdateGenreAndMovieFields.Designer.cs">
+      <DependentUpon>202004180830085_UpdateGenreAndMovieFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180830546_PopulateGenre.cs" />
+    <Compile Include="Migrations\202004180830546_PopulateGenre.Designer.cs">
+      <DependentUpon>202004180830546_PopulateGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180843474_UpdateGenresAndMovies.cs" />
+    <Compile Include="Migrations\202004180843474_UpdateGenresAndMovies.Designer.cs">
+      <DependentUpon>202004180843474_UpdateGenresAndMovies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004180851022_UpdateGenresAndMovie2.cs" />
+    <Compile Include="Migrations\202004180851022_UpdateGenresAndMovie2.Designer.cs">
+      <DependentUpon>202004180851022_UpdateGenresAndMovie2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -329,6 +350,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004180729421_ApplyAnnotationToBirthDate.resx">
       <DependentUpon>202004180729421_ApplyAnnotationToBirthDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180808510_AddGenre.resx">
+      <DependentUpon>202004180808510_AddGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180830085_UpdateGenreAndMovieFields.resx">
+      <DependentUpon>202004180830085_UpdateGenreAndMovieFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180830546_PopulateGenre.resx">
+      <DependentUpon>202004180830546_PopulateGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180843474_UpdateGenresAndMovies.resx">
+      <DependentUpon>202004180843474_UpdateGenresAndMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180851022_UpdateGenresAndMovie2.resx">
+      <DependentUpon>202004180851022_UpdateGenresAndMovie2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
