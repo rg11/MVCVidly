@@ -105,6 +105,7 @@ namespace VidlyNew.Controllers
         public ActionResult Details(string Id)
         {
             Movie movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id.ToString() == Id);
+            
             return View(movie);
         }
        

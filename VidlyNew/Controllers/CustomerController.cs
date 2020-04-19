@@ -36,27 +36,54 @@ namespace VidlyNew.Controllers
             Customer customer = _context.Customers.Include(
                 c => c.MembershipType).
                 FirstOrDefault(p => p.Id.ToString() == Id);
+
+
             return View(customer);
         }
 
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            NewCustomerViewModel newCustomerVM = new ViewModels.NewCustomerViewModel
+
+            CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel
             {
                 MembershipTypes  = membershipTypes
             };
 
-            return View(newCustomerVM);
+            return View("CustomerFormView", customerVM);
         }
 
         [HttpPost]
-        public ActionResult Create(Customer  customer)
+        public ActionResult Save(Customer  customer)
         {
-            _context.Customers.Add(customer);
+            if (customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                Customer cusotmerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+                cusotmerInDb.Name = customer.Name;
+                cusotmerInDb.Birthdate = customer.Birthdate;
+                cusotmerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                cusotmerInDb.MembershipTypeId = cusotmerInDb.MembershipTypeId;            
+            }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");            
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            Customer customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
+
+            CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel();
+
+            customerVM.Customer = customer;
+            customerVM.MembershipTypes = _context.MembershipTypes;
+
+            return View("CustomerFormView", customerVM);
         }
     }
 }
