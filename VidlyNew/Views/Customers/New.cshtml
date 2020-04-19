@@ -7,10 +7,10 @@
 
 <h2>New Customer</h2>
 
-@using (Html.BeginForm("New", "Customer", "Create"))
+@using(Html.BeginForm("Create", "Customers"))
 {
     <div class="form-group">
-        @Html.LabelFor(m=>m.Customer.Name) 
+        @Html.LabelFor(m => m.Customer.Name) 
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
@@ -24,9 +24,10 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MembershipTypeId) 
-        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "MembershipName"), "Select Membership Type" , new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "MembershipName"), "Select Membership Type", new { @class = "form-control" })
     </div>
+   <button type = "submit" class="btn btn-primary">Save</button>
 
-        }
+}
 
 
