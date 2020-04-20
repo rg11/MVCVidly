@@ -10,9 +10,8 @@ namespace VidlyNew.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(255)]
-
+        [Required(ErrorMessage ="Please enter Customer Name")]
+        [StringLength(255)]                 
         public string Name { get; set; }
 
         [Display(Name ="Date of Birth")]
