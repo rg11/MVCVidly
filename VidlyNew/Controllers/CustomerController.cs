@@ -43,6 +43,8 @@ namespace VidlyNew.Controllers
 
         public ActionResult New()
         {
+            ViewBag.Title = "New Customer";
+
             var membershipTypes = _context.MembershipTypes.ToList();
 
             CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel
@@ -76,6 +78,8 @@ namespace VidlyNew.Controllers
 
         public ActionResult Edit(int Id)
         {
+            ViewBag.Title = "Edit Customer";
+
             Customer customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
 
             CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel();
