@@ -21,7 +21,7 @@ namespace VidlyNew.Models
             if (customer.Birthdate == null)
                 return new ValidationResult("Birthdate is required");
 
-            var age = DateTime.Today.Year - customer.Birthdate.Value.Year;
+            var age = DateTime.Today.Year - customer.Birthdate.Year;
 
            return (age >= 18) ? ValidationResult.Success : new ValidationResult("Customer should be 18 years old to be a member") ;
         }

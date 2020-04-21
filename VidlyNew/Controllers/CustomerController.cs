@@ -46,9 +46,9 @@ namespace VidlyNew.Controllers
             ViewBag.Title = "New Customer";
 
             var membershipTypes = _context.MembershipTypes.ToList();
-
+            
             CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel
-            {
+            {                             
                 MembershipTypes  = membershipTypes
             };
 
@@ -61,9 +61,8 @@ namespace VidlyNew.Controllers
         {
             if(!ModelState.IsValid)
             {
-                CustomerFormViewModel customerVM = new CustomerFormViewModel()
-                {
-                    Customer = customer,
+                CustomerFormViewModel customerVM = new CustomerFormViewModel(customer)
+                {                     
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
 
@@ -94,10 +93,10 @@ namespace VidlyNew.Controllers
 
             Customer customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
 
-            CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel();
-
-            customerVM.Customer = customer;
-            customerVM.MembershipTypes = _context.MembershipTypes;
+            CustomerFormViewModel customerVM = new ViewModels.CustomerFormViewModel(customer)
+            {                                   
+                MembershipTypes = _context.MembershipTypes
+            };
 
             return View("CustomerFormView", customerVM);
         }

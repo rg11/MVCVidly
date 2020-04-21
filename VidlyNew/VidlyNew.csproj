@@ -235,6 +235,10 @@
     <Compile Include="Migrations\202004180851022_UpdateGenresAndMovie2.Designer.cs">
       <DependentUpon>202004180851022_UpdateGenresAndMovie2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004210403364_resetDb.cs" />
+    <Compile Include="Migrations\202004210403364_resetDb.Designer.cs">
+      <DependentUpon>202004210403364_resetDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -370,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004180851022_UpdateGenresAndMovie2.resx">
       <DependentUpon>202004180851022_UpdateGenresAndMovie2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004210403364_resetDb.resx">
+      <DependentUpon>202004210403364_resetDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

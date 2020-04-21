@@ -69,9 +69,8 @@ namespace VidlyNew.Controllers
 
             Movie  movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
-            MovieFormViewModel movieFormVM = new MovieFormViewModel()
+            MovieFormViewModel movieFormVM = new MovieFormViewModel(movie)
             {
-                Movie = movie,
                 Genres = _context.Genres.ToList()
             };
 
@@ -123,12 +122,12 @@ namespace VidlyNew.Controllers
         {
             ViewBag.Title = "New Movie";
 
-            MovieFormViewModel movieVM = new MovieFormViewModel
+            MovieFormViewModel movieFormVM = new MovieFormViewModel()
             {
                 Genres = _context.Genres.ToList()
             };
 
-            return View("MovieFormView", movieVM);
+            return View("MovieFormView", movieFormVM);
         }
 
         [HttpPost]
@@ -137,9 +136,8 @@ namespace VidlyNew.Controllers
         {
             if(!ModelState.IsValid)
             {
-                MovieFormViewModel movieVM = new MovieFormViewModel
+                MovieFormViewModel movieVM = new MovieFormViewModel(movie)
                 {
-                    Movie = movie,
                     Genres = _context.Genres.ToList()
                 };
 
