@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -22,6 +23,11 @@ namespace VidlyNew
             //    new { controller = "Movies", action = "ByReleaseDate" },
             //    new { year ="2015|2016", month=@"\d{2}"}
             //);
+
+            routes.MapHttpRoute(
+                name: "API Default",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional });
 
             routes.MapRoute(
                 name: "Default",
