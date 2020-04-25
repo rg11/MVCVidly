@@ -21,7 +21,7 @@ namespace VidlyNew.Controllers.API
         }
 
         // Get api/customers/1
-        public CustomerDto GetCustomer(int Id)
+        public IHttpActionResult GetCustomer(int Id)
         {
             Customer customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
 
@@ -31,25 +31,26 @@ namespace VidlyNew.Controllers.API
             }
 
            
-            return Mapper.Map<Customer,CustomerDto>(customer);
+            return Ok(Mapper.Map<Customer,CustomerDto>(customer));
         }
 
         // Get api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            var customers = _context.Customers.ToList().Select(Mapper.Map <Customer,CustomerDto>);
+             var customers = _context.Customers.ToList().Select(Mapper.Map <Customer,CustomerDto>);
 
+            
             if (customers == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            return customers;
+            return Ok(customers);
         }
 
         //POST api/customers
         [HttpPost]
-        public CustomerDto CreateCustomers(CustomerDto customerDto)
+        public IHttpActionResult CreateCustomers(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -64,13 +65,13 @@ namespace VidlyNew.Controllers.API
 
             customerDto.Id = customer.Id;
 
-            return customerDto;
+            return Created(Request.RequestUri+"/"+customerDto.Id, customerDto);
         }
 
 
         //Edit api/customers/1
         [HttpPut]
-        public void EditCustomer(CustomerDto customerDto)
+        public IHttpActionResult EditCustomer(CustomerDto customerDto)
         {
             if(!ModelState.IsValid)
             {
@@ -89,11 +90,13 @@ namespace VidlyNew.Controllers.API
             
             _context.SaveChanges();
 
+            return Json(customerDto);
+
         }
 
         //Delete api/customers/1
         [HttpDelete]
-        public void  DeleteCustomer(int id)
+        public IHttpActionResult  DeleteCustomer(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -110,6 +113,8 @@ namespace VidlyNew.Controllers.API
             _context.Customers.Remove(customerInDb);
 
             _context.SaveChanges();
+
+            return Ok();
                                                 
         }
     }
