@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using VidlyNew.Dtos;
 using VidlyNew.Models;
 
@@ -49,7 +49,7 @@ namespace VidlyNew.Controllers.API
         }
 
         //POST api/customers
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public IHttpActionResult CreateCustomers(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace VidlyNew.Controllers.API
 
 
         //Edit api/customers/1
-        [HttpPut]
+        [System.Web.Http.HttpPut]
         public IHttpActionResult EditCustomer(CustomerDto customerDto)
         {
             if(!ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace VidlyNew.Controllers.API
         }
 
         //Delete api/customers/1
-        [HttpDelete]
+        [System.Web.Http.HttpDelete]
         public IHttpActionResult  DeleteCustomer(int id)
         {
             if (!ModelState.IsValid)
