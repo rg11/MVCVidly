@@ -22,5 +22,7 @@ namespace VidlyNew.Dtos
 
         [Required]        
         public byte MembershipTypeId { get; set; }
+
+        public MembershipDto MembershipType { get; set; }
     }
 }

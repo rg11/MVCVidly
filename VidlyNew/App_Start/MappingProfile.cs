@@ -14,9 +14,10 @@ namespace VidlyNew.App_Start
         {
             Mapper.CreateMap<CustomerDto, Customer>();
             Mapper.CreateMap<Customer, CustomerDto>();
+            Mapper.CreateMap<MembershipType, MembershipDto>();
 
             //If you want to assign id prop and want to avoid exception
-           // CreateMap<Movie, MovieDto>().ForMember(m => m.Id, opt => opt.Ignore());
+            // CreateMap<Movie, MovieDto>().ForMember(m => m.Id, opt => opt.Ignore());
         }
     }
 }

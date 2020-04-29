@@ -4,67 +4,95 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Customers</h1>
+<h2>Customers</h2>
 
-@Html.ActionLink("New","New","Customers", new { @class="btn btn-primary"})
+<!--@@Html.ActionLink("New","New","Customers", new { @@class="btn btn-primary"}) -->
 
 <table id="Customers" class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>
-                <h3>Customer</h3>
-            </th>
-            <th>
-                <h3>Membership</h3>
-            </th>
-            <th>
-                <h3>Discount</h3>
-            </th>
-            <th>
-                <h3>Delete</h3>
-            </th>
+            <th>Customer</th>
+            <th>Membership</th>
+            <th>Discount</th>
+            <th>Delete</th>
         </tr>
-        </thead>
+    </thead>
     <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td colspan="4">
-                    There are no customers yet.
-                </td>
-            </tr>
-        }
-        else
-        {
-            foreach (var cust in Model)
+
+    </tbody>
+
+    </table>
+
+    <!--  <tbody>
+          Server side markup logic
+            @@if (!Model.Any())
             {
                 <tr>
-                    <td>
-                        @Html.ActionLink(
-                           cust.Name, "Edit", "Customers",
-                           new
-                           {                                                     // routeValues
-                               Id = cust.Id
-                           },
-                           null
-                         )
-
+                    <td colspan="4">
+                        There are no customers yet.
                     </td>
-                    <td>@cust.MembershipType.MembershipName</td>
-                    <td>@cust.MembershipType.DiscountRate%</td>
-                    <td>
-                        <button class="btn btn-link js-delete" data-customer-id="@cust.Id" >Delete</button>
-                    </td>
-</tr>
+                </tr>
             }
-        }
-    </tbody>
-</table>
+            else
+            {
+                foreach (var cust in Model)
+                {
+                    <tr>
+                        <td>
+                            @@Html.ActionLink(
+                               cust.Name, "Edit", "Customers",
+                               new
+                               {                                                     // routeValues
+                                   Id = cust.Id
+                               },
+                               null
+                             )
 
-@section Scripts
-{
+                        </td>
+                        <td>@@cust.MembershipType.MembershipName</td>
+                        <td>@@cust.MembershipType.DiscountRate%</td>
+                        <td>
+                            <button class="btn btn-link js-delete" data-customer-id="@@cust.Id" >Delete</button>
+                        </td>
+    </tr>
+                }
+            }
+        </tbody>
+
+          -->
+
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
+            $("#Customers").DataTable({
+                ajax:{
+                    url: "/api/customers",
+                    dataSrc:""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data,type,customer) {
+                            return "<a href='/customers/edit/"+customer.id+"'>" + customer.name +"</a>"
+                        }                      
+                    },
+                    {
+                        data: "membershipType.membershipName"
+                    },
+                    {
+                        data: "membershipType.discountRate"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-link js-delete' data-customer-id="+data+">Delete</button>"
+                        }
+                    }
+                ]
+            });
+
+
+
+
             $("#Customers").on("click", ".js-delete", function () {
                 var button = $(this);
                 
@@ -85,4 +113,4 @@
             });
         });
     </script>
-}
+

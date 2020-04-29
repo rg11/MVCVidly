@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -14,6 +15,7 @@ namespace VidlyNew.Controllers.API
     {
 
         ApplicationDbContext _context;
+        private readonly object c;
 
         public CustomersController()
         {
@@ -23,8 +25,9 @@ namespace VidlyNew.Controllers.API
         // Get api/customers/1
         public IHttpActionResult GetCustomer(int Id)
         {
-            Customer customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
-
+            var customer = _context.Customers
+                .Include(c => c.MembershipType).SingleOrDefault(c => c.Id == Id);
+                                                       
             if (customer == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -37,15 +40,20 @@ namespace VidlyNew.Controllers.API
         // Get api/customers
         public IHttpActionResult GetCustomers()
         {
-             var customers = _context.Customers.ToList().Select(Mapper.Map <Customer,CustomerDto>);
+            var customersQuery = _context.Customers
+               .Include(c => c.MembershipType);     
 
+            var customerDtos = customersQuery
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+                            
             
-            if (customers == null)
+            if (customerDtos == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            return Ok(customers);
+            return Ok(customerDtos);
         }
 
         //POST api/customers
