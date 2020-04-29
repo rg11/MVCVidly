@@ -63,7 +63,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#Customers").DataTable({
+            var table = $("#Customers").DataTable({
                 ajax:{
                     url: "/api/customers",
                     dataSrc:""
@@ -91,7 +91,7 @@
             });
 
 
-
+            //Delete Button onClick event:
 
             $("#Customers").on("click", ".js-delete", function () {
                 var button = $(this);
@@ -104,7 +104,8 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
+                                //button.parents("tr").remove();
                                 console.log("Customer deleted successfully!");
                             }
                         });
