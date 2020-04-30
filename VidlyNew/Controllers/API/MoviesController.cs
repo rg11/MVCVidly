@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Mvc;
+using VidlyNew.Dtos;
 using VidlyNew.Models;
 
 namespace VidlyNew.Controllers.API
@@ -24,24 +26,18 @@ namespace VidlyNew.Controllers.API
         // api/Movies
         public IHttpActionResult GetMovies()
         {
-            IEnumerable<Movie> movies = null;
+            var moviesQuery = _context.Movies;
 
-            try
-            {
-                movies = _context.Movies.ToList();
+            var moviesDto = moviesQuery
+                            .ToList()
+                            .Select(Mapper.Map<Movie, MovieDto>);
 
-                if (movies == null)
-                {
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                }
-            }
-            catch (Exception ex)
+            if (moviesDto == null)
             {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-
-            return Ok(movies);
+            return Ok(moviesDto);
         }
 
 
@@ -49,37 +45,43 @@ namespace VidlyNew.Controllers.API
         public IHttpActionResult GetMovie(int Id)
         {
             Movie movieInDb = null;
-   movieInDb = _context.Movies.SingleOrDefault(m => m.Id == Id);
 
-                if (movieInDb == null)
-                {
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                }
-           
+            movieInDb = _context.Movies.SingleOrDefault(m => m.Id == Id);
 
+            if (movieInDb == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+                                                               
 
-            return Ok(movieInDb);
+            return Ok(Mapper.Map<Movie,MovieDto>(movieInDb));
         }
 
         [System.Web.Http.HttpPost]
 
-        public IHttpActionResult CreateMovie(Movie newMovie)
+        public IHttpActionResult CreateMovie(MovieDto movie)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
+            var newMovie = Mapper.Map<MovieDto, Movie>(movie);
+
             _context.Movies.Add(newMovie);
+
             _context.SaveChanges();
 
-            return Created(Request.RequestUri + "/" + newMovie.Id, newMovie);
+
+            movie.Id = newMovie.Id;
+                
+            return Created(Request.RequestUri + "/" + movie.Id, movie);
         }
 
 
         //Edit api/customers/1
         [System.Web.Http.HttpPut]
-        public IHttpActionResult EditMovie(int id, Movie movie)
+        public IHttpActionResult EditMovie(int id, MovieDto movieDto)
         {
             if (!ModelState.IsValid)
             {
@@ -93,14 +95,42 @@ namespace VidlyNew.Controllers.API
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            movieInDb.Name = movie.Name;
-            movieInDb.GenreId = movie.GenreId;
-            movieInDb.QuantityInStock = movie.QuantityInStock;
-            movieInDb.ReleasedDate = movie.ReleasedDate;
+            movieDto.Id = movieInDb.Id;
 
-            _context.SaveChanges();
+            Mapper.Map<MovieDto,Movie>(movieDto, movieInDb);
 
-            return Ok(movieInDb);    
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                //foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                //{
+                //    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                //    {
+                //        Console.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                //    }
+                //}
+                //OR
+
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+
+            }
+
+            return Ok(movieDto);    
         }
 
         //Delete api/movies/1

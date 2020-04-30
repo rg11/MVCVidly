@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -79,24 +80,55 @@ namespace VidlyNew.Controllers.API
 
         //Edit api/customers/1
         [System.Web.Http.HttpPut]
-        public IHttpActionResult EditCustomer(CustomerDto customerDto)
+        public IHttpActionResult EditCustomer(int id, CustomerDto customerDto)
         {
             if(!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            Customer customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerDto.Id);
+            Customer customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if(customerInDb==null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
+            customerDto.Id = customerInDb.Id;
+
             Mapper.Map(customerDto, customerInDb);
 
-            
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                //foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                //{
+                //    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                //    {
+                //        Console.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                //    }
+                //}
+                //OR
+
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+
+            }
+
 
             return Json(customerDto);
 
