@@ -1,41 +1,38 @@
 ﻿@model IEnumerable<VidlyNew.Models.Movie>
 
 @{
-    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Movies</h1>
+<h2>Movies</h2>
 
-@Html.ActionLink("New", "New", "Movies", new { @class = "btn btn-primary" })
+<!--@@Html.ActionLink("New", "New", "Movies", new { @@class = "btn btn-primary" })
+    -->
 
 
-
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>
-                <h3>Movie</h3>
-            </th>
-            <th>
-                <h3>Genre</h3>
-            </th>
+            <th>Movie</th>
+            <th>Genre</th>
+            <th>Stock Quantity</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-<tbody>
-       @if (!Model.Any())
-       {
-        <tr>
-            <td colspan="2">
-                There are no movies available yet.
-            </td>
-        </tr>
-       }
-       else
-       {
-           foreach (var movie in Model)
-           {
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="4">
+                    There are no movies available yet.
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var movie in Model)
+            {
                 <tr>
                     <td>
                         @Html.ActionLink(
@@ -50,10 +47,12 @@
                        )
                     </td>
                     <td>@movie.Genre.Name</td>
-</tr>
+                    <td>@movie.QuantityInStock</td>
+                    <td>
+                        <button class="btn btn-link js-delete" data-movie-id="@movie.Id">Delete</button>
+                    </td>
+                </tr>
             }
         }
     </tbody>
 </table>
-
-
