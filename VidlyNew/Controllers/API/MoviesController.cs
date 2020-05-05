@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
@@ -26,7 +27,9 @@ namespace VidlyNew.Controllers.API
         // api/Movies
         public IHttpActionResult GetMovies()
         {
-            var moviesQuery = _context.Movies;
+            var moviesQuery = _context.Movies
+                .Include(m=> m.Genre)
+                .Where(m => m.QuantityInStock > 0);
 
             var moviesDto = moviesQuery
                             .ToList()

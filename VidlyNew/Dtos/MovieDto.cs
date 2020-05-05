@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using VidlyNew.App_Start;
+using VidlyNew.Models;
 
 namespace VidlyNew.Dtos
 {
@@ -27,6 +28,8 @@ namespace VidlyNew.Dtos
                                            
         [Required]       
         public int GenreId { get; set; }
+
+        public Genre Genre { get; set; }
 
         public MovieDto()
         {
