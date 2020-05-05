@@ -9,6 +9,7 @@ using VidlyNew.ViewModels;
 
 namespace VidlyNew.Controllers
 {
+    
     public class CustomersController : Controller
     {
         private ApplicationDbContext _context;
@@ -24,6 +25,7 @@ namespace VidlyNew.Controllers
         }
 
         // GET: Customer
+        
         public ActionResult Index()
         {
             //Server to call to fetch customers
