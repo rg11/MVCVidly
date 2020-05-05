@@ -107,9 +107,11 @@ namespace VidlyNew.Controllers
 
         public ActionResult Index()
         {
-           // var movies = _context.Movies.Include(m => m.Genre).ToList();
+            // var movies = _context.Movies.Include(m => m.Genre).ToList();
+            if (User.IsInRole("CanManageMovies"))
+                return View("List");
 
-            return View();
+            return View("ReadOnlyList");
         }
 
         public ActionResult Details(int Id)
