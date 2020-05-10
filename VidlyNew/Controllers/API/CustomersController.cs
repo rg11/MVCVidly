@@ -8,15 +8,14 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Mvc;
 using VidlyNew.Dtos;
-using VidlyNew.Models;
+using VidlyNew.Models;                                                     
 
 namespace VidlyNew.Controllers.API
 {
     public class CustomersController : ApiController
     {
 
-        ApplicationDbContext _context;
-        private readonly object c;
+        ApplicationDbContext _context;     
 
         public CustomersController()
         {

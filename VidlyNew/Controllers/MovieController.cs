@@ -64,6 +64,7 @@ namespace VidlyNew.Controllers
             
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Edit(int? id)
         {
             ViewBag.Title = "Edit Movie";
@@ -121,6 +122,7 @@ namespace VidlyNew.Controllers
             return View(movie);
         }
 
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult New()
         {
             ViewBag.Title = "New Movie";
@@ -135,6 +137,7 @@ namespace VidlyNew.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public ActionResult Save(Movie movie)
         {
             if(!ModelState.IsValid)

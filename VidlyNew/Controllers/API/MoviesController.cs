@@ -60,8 +60,9 @@ namespace VidlyNew.Controllers.API
             return Ok(Mapper.Map<Movie,MovieDto>(movieInDb));
         }
 
-        [System.Web.Http.HttpPost]
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public IHttpActionResult CreateMovie(MovieDto movie)
         {
             if (!ModelState.IsValid)
@@ -84,6 +85,7 @@ namespace VidlyNew.Controllers.API
 
         //Edit api/customers/1
         [System.Web.Http.HttpPut]
+        [System.Web.Http.Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public IHttpActionResult EditMovie(int id, MovieDto movieDto)
         {
             if (!ModelState.IsValid)
@@ -138,6 +140,7 @@ namespace VidlyNew.Controllers.API
 
         //Delete api/movies/1
         [System.Web.Http.HttpDelete]
+        [System.Web.Http.Authorize(Roles = Constants.RoleNames.CanManageMovies)]
         public IHttpActionResult DeleteMovie(int id)
         {
             if (!ModelState.IsValid)
